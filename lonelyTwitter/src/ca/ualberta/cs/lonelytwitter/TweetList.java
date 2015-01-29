@@ -26,10 +26,41 @@ public class TweetList {
 		return count;
 	}
 
-	public void addTweet(LonelyTweetModel tweet) {
+	public void addTweet(LonelyTweetModel tweet) throws Exception{
 		// TODO Auto-generated method stub
-		tweetlist.add(tweet);
+		if(hasTweet(tweet)){
+			throw new IllegalAccessException("Already in list");
+		}
+		int x = 0;
+		if(tweetlist.size()>0){
+		while(tweet.getTimestamp().after(tweetlist.get(x).getTimestamp())){
+			x++;
+		}
+		}
+		tweetlist.add(x, tweet);
 		count++;
+		
+	}
+
+	public boolean hasTweet(LonelyTweetModel tweet) {
+		// TODO Auto-generated method stub
+		int x=0;
+		while(x<tweetlist.size()){
+			if(tweetlist.get(x).equals(tweet))
+				return true;
+		}
+			return false;
+
+	}
+
+	public void removeTweet(LonelyTweetModel tweet) {
+		// TODO Auto-generated method stub
+		int x=0;
+		while(x<tweetlist.size()){
+			if(tweetlist.get(x).equals(tweet))
+				tweetlist.remove(x);
+				count--;
+		}
 		
 	}
 
